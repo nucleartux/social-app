@@ -7,7 +7,7 @@ export function getGooglePlayReferrerInfoAsync(): Promise<GooglePlayReferrerInfo
   throw new NotImplementedError()
 }
 
-export async function getReferrerInfoAsync(): Promise<ReferrerInfo | null> {
+export function getReferrerInfoAsync(): Promise<ReferrerInfo | null> {
   if (
     Platform.OS === 'web' &&
     // for ssr
@@ -29,5 +29,6 @@ export async function getReferrerInfoAsync(): Promise<ReferrerInfo | null> {
       console.error('Failed to parse referrer URL')
     }
   }
+
   return null
 }
