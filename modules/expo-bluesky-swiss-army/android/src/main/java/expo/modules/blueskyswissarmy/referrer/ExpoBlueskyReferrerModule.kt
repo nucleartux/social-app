@@ -23,7 +23,7 @@ class ExpoBlueskyReferrerModule : Module() {
         activityReferrer = appContext.currentActivity?.referrer
       }
 
-      Function("getReferrerInfo") {
+      AsyncFunction("getReferrerInfoAsync") {
         val intentReferrer =
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent?.getParcelableExtra(Intent.EXTRA_REFERRER, Uri::class.java)
@@ -40,7 +40,7 @@ class ExpoBlueskyReferrerModule : Module() {
               "hostname" to intentReferrer.host,
             )
           intent = null
-          return@Function res
+          return@AsyncFunction res
         }
 
         // In all other cases, we'll just record the app that sent the intent.
@@ -52,10 +52,10 @@ class ExpoBlueskyReferrerModule : Module() {
               "hostname" to (activityReferrer?.host ?: ""),
             )
           activityReferrer = null
-          return@Function res
+          return@AsyncFunction res
         }
 
-        return@Function null
+        return@AsyncFunction null
       }
 
       AsyncFunction("getGooglePlayReferrerInfoAsync") { promise: Promise ->

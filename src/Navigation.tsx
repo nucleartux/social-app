@@ -777,14 +777,15 @@ function logModuleInitTime() {
   })
 
   if (isWeb) {
-    const referrerInfo = Referrer.getReferrerInfo()
-    if (referrerInfo && referrerInfo.hostname !== 'bsky.app') {
-      logEvent('deepLink:referrerReceived', {
-        to: window.location.href,
-        referrer: referrerInfo?.referrer,
-        hostname: referrerInfo?.hostname,
-      })
-    }
+    Referrer.getReferrerInfoAsync().then(info => {
+      if (info && info.hostname !== 'bsky.app') {
+        logEvent('deepLink:referrerReceived', {
+          to: window.location.href,
+          referrer: info?.referrer,
+          hostname: info?.hostname,
+        })
+      }
+    })
   }
 
   if (__DEV__) {

@@ -6,7 +6,7 @@ export function getGooglePlayReferrerInfoAsync(): Promise<GooglePlayReferrerInfo
   throw new NotImplementedError()
 }
 
-export function getReferrerInfo(): ReferrerInfo | null {
+export function getReferrerInfoAsync(): Promise<ReferrerInfo | null> {
   const referrer = SharedPrefs.getString('referrer')
   if (referrer) {
     SharedPrefs.removeValue('referrer')
@@ -19,7 +19,7 @@ export function getReferrerInfo(): ReferrerInfo | null {
     } catch (e) {
       return {
         referrer,
-        hostname: referrer,
+        hostname: undefined,
       }
     }
   }
