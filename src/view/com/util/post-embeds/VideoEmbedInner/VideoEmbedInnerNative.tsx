@@ -9,7 +9,7 @@ import {useIsFocused} from '@react-navigation/native'
 
 import {HITSLOP_30} from '#/lib/constants'
 import {useAppState} from '#/lib/hooks/useAppState'
-import { clamp } from '#/lib/numbers'
+import {clamp} from '#/lib/numbers'
 import {useVideoPlayer} from '#/view/com/util/post-embeds/VideoPlayerContext'
 import {android, atoms as a, useTheme} from '#/alf'
 import {Mute_Stroke2_Corner0_Rounded as MuteIcon} from '#/components/icons/Mute'
@@ -25,6 +25,7 @@ export function VideoEmbedInnerNative({
 }: {
   embed: AppBskyEmbedVideo.View
 }) {
+  const {_} = useLingui()
   const player = useVideoPlayer()
   const ref = useRef<VideoView>(null)
   const isScreenFocused = useIsFocused()
@@ -70,6 +71,10 @@ export function VideoEmbedInnerNative({
           player.muted = true
           if (!player.playing) player.play()
         }}
+        accessibilityLabel={
+          embed.alt ? _(msg`Video: ${embed.alt}`) : _(msg`Video`)
+        }
+        accessibilityHint=""
       />
       <VideoControls player={player} enterFullscreen={enterFullscreen} />
     </View>
